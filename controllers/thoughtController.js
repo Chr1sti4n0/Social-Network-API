@@ -82,7 +82,7 @@ module.exports = {
         console.log("You are deleting a reaction.")
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $pull: { reactions: req.params.reactionId } },
+            { $pull: { reactions: {reactionId: req.params.reactionId } } },
             { new: true }
         )
             .then((thought) =>
@@ -92,8 +92,6 @@ module.exports = {
                         .json({ message: 'No thought found with that ID.' })
                     : res.json(thought)
             )
-            .catch((err) => {
-                console.log(err)
-                res.status(500).json(err)});
+            .catch((err) => res.status(500).json(err));
     },
 }; 
